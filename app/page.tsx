@@ -1,69 +1,399 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+type HomeContent = {
+  title: string;
+  subtitle: string;
+  description: string;
+};
 
 export default function Home() {
+  const [homeContent, setHomeContent] =
+    useState<HomeContent>({
+      title: "श्री खाटू श्याम",
+      subtitle: "मंदिर, अजमेर",
+      description:
+        "श्री खाटू श्याम मंदिर, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है। यह वेबसाइट मंदिर से जुड़ी जानकारी, धार्मिक आयोजनों और भक्तों की सुंदर स्मृतियों को एक स्थान पर प्रस्तुत करने के लिए बनाई गई है।",
+    });
+
+  useEffect(() => {
+    async function loadHomeContent() {
+      try {
+        const response = await fetch(
+          "/api/content"
+        );
+
+        const data = await response.json();
+
+        if (
+          data.success &&
+          Array.isArray(data.content)
+        ) {
+          const home = data.content.find(
+            (item: {
+              section: string;
+            }) => item.section === "home"
+          );
+
+          if (home) {
+            setHomeContent({
+              title:
+                home.title ||
+                "श्री खाटू श्याम",
+
+              subtitle:
+                home.subtitle ||
+                "मंदिर, अजमेर",
+
+              description:
+                home.description ||
+                "श्री खाटू श्याम मंदिर, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है।",
+            });
+          }
+        }
+      } catch (error) {
+        console.error(
+          "Home content error:",
+          error
+        );
+      }
+    }
+
+    loadHomeContent();
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main>
+
+      {/* =========================
+          NAVBAR
+      ========================= */}
+
+      <header className="navbar">
+
+        <div className="nav-container">
+
+          <Link
+            href="/"
+            className="logo"
+          >
+
+            <div className="logo-icon">
+              ॐ
+            </div>
+
+            <div>
+              <h2>
+                श्री खाटू श्याम
+              </h2>
+
+              <span>
+                मंदिर, अजमेर
+              </span>
+            </div>
+
+          </Link>
+
+
+          <nav className="nav-links">
+
+            <Link href="/">
+              Home
+            </Link>
+
+            <Link href="/about">
+              About
+            </Link>
+
+            <Link href="/gallery">
+              Gallery
+            </Link>
+
+            <Link href="/contact">
+              Contact
+            </Link>
+
+          </nav>
+
+        </div>
+
+      </header>
+
+
+      {/* =========================
+          HERO
+      ========================= */}
+
+      <section className="hero">
+
+        <div className="hero-overlay"></div>
+
+        <div className="hero-content">
+
+          <p className="welcome">
+            🙏 जय श्री श्याम 🙏
           </p>
+
+
+          <h1>
+
+            {homeContent.title}
+
+            <br />
+
+            <span>
+              {homeContent.subtitle}
+            </span>
+
+          </h1>
+
+
+          <p className="tagline">
+            हारे का सहारा, बाबा श्याम हमारा
+          </p>
+
+
+          <div className="buttons">
+
+            <Link
+              href="/gallery"
+              className="btn primary"
+            >
+              दर्शन एवं गैलरी
+            </Link>
+
+
+            <Link
+              href="/contact"
+              className="btn secondary"
+            >
+              संपर्क करें
+            </Link>
+
+          </div>
+
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+      </section>
+
+
+      {/* =========================
+          WELCOME SECTION
+      ========================= */}
+
+      <section className="welcome-section">
+
+        <div className="container">
+
+          <p className="section-label">
+            ॥ श्री श्याम ॥
+          </p>
+
+
+          <h2>
+            {homeContent.title} के पावन धाम में आपका स्वागत है
+          </h2>
+
+
+          <div className="gold-line"></div>
+
+
+          <p className="description">
+            {homeContent.description}
+          </p>
+
+
+          <Link
+            href="/about"
+            className="read-more"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            मंदिर के बारे में जानें →
+          </Link>
+
         </div>
-      </main>
-    </div>
+
+      </section>
+
+
+      {/* =========================
+          FEATURES
+      ========================= */}
+
+      <section className="features">
+
+        <div className="container">
+
+          <p className="section-label">
+            विशेष जानकारी
+          </p>
+
+
+          <h2>
+            श्याम दरबार से जुड़ें
+          </h2>
+
+
+          <div className="cards">
+
+            {/* CARD 1 */}
+
+            <div className="card">
+
+              <div className="icon">
+                🛕
+              </div>
+
+              <h3>
+                मंदिर परिचय
+              </h3>
+
+              <p>
+                मंदिर और बाबा श्याम से जुड़ी
+                महत्वपूर्ण जानकारी प्राप्त करें।
+              </p>
+
+              <Link href="/about">
+                और जानें →
+              </Link>
+
+            </div>
+
+
+            {/* CARD 2 */}
+
+            <div className="card">
+
+              <div className="icon">
+                📸
+              </div>
+
+              <h3>
+                कार्यक्रम एवं गैलरी
+              </h3>
+
+              <p>
+                हर वर्ष आयोजित होने वाले
+                धार्मिक कार्यक्रमों की तस्वीरें देखें।
+              </p>
+
+              <Link href="/gallery">
+                गैलरी देखें →
+              </Link>
+
+            </div>
+
+
+            {/* CARD 3 */}
+
+            <div className="card">
+
+              <div className="icon">
+                📍
+              </div>
+
+              <h3>
+                स्थान एवं संपर्क
+              </h3>
+
+              <p>
+                मंदिर का स्थान और संपर्क से
+                जुड़ी जानकारी प्राप्त करें।
+              </p>
+
+              <Link href="/contact">
+                संपर्क करें →
+              </Link>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* =========================
+          QUOTE
+      ========================= */}
+
+      <section className="quote">
+
+        <div>
+
+          <span>
+            “
+          </span>
+
+          <h2>
+
+            हारे का सहारा,
+            <br />
+            बाबा श्याम हमारा
+
+          </h2>
+
+          <p>
+            जय श्री श्याम 🙏
+          </p>
+
+        </div>
+
+      </section>
+
+
+      {/* =========================
+          FOOTER
+      ========================= */}
+
+      <footer>
+
+        <div className="container footer-container">
+
+          <div>
+
+            <h2>
+              श्री खाटू श्याम मंदिर
+            </h2>
+
+            <p>
+              अजमेर, राजस्थान
+            </p>
+
+          </div>
+
+
+          <div className="footer-links">
+
+            <Link href="/">
+              Home
+            </Link>
+
+            <Link href="/about">
+              About
+            </Link>
+
+            <Link href="/gallery">
+              Gallery
+            </Link>
+
+            <Link href="/contact">
+              Contact
+            </Link>
+
+          </div>
+
+        </div>
+
+
+        <div className="copyright">
+          © 2026 श्री खाटू श्याम मंदिर, अजमेर
+        </div>
+
+      </footer>
+
+    </main>
   );
 }
