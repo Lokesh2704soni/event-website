@@ -13,10 +13,40 @@ export default function Home() {
   const [homeContent, setHomeContent] =
     useState<HomeContent>({
       title: "श्री खाटू श्याम",
-      subtitle: "मंदिर, अजमेर",
+      subtitle: "मंडल, अजमेर",
       description:
-        "श्री खाटू श्याम मंदिर, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है। यह वेबसाइट मंदिर से जुड़ी जानकारी, धार्मिक आयोजनों और भक्तों की सुंदर स्मृतियों को एक स्थान पर प्रस्तुत करने के लिए बनाई गई है।",
+        "श्री खाटू श्याम मंडल, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है। यह वेबसाइट मंडल से जुड़ी जानकारी, धार्मिक आयोजनों और भक्तों की सुंदर स्मृतियों को एक स्थान पर प्रस्तुत करने के लिए बनाई गई है।",
     });
+
+  // =========================
+  // HERO IMAGE SLIDER
+  // =========================
+
+  const heroImages = [
+    "/1.jpeg",
+    "/2.jpeg",
+    "/3.jpeg",
+    "/4.jpeg",
+    "/5.jpeg",
+    "/6.jpeg",
+  ];
+
+  const [currentHero, setCurrentHero] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHero(
+        (previous) =>
+          (previous + 1) % heroImages.length
+      );
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // =========================
+  // LOAD HOME CONTENT
+  // =========================
 
   useEffect(() => {
     async function loadHomeContent() {
@@ -45,11 +75,11 @@ export default function Home() {
 
               subtitle:
                 home.subtitle ||
-                "मंदिर, अजमेर",
+                "मंडल, अजमेर",
 
               description:
                 home.description ||
-                "श्री खाटू श्याम मंदिर, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है।",
+                "श्री खाटू श्याम मंडल, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है।",
             });
           }
         }
@@ -90,7 +120,7 @@ export default function Home() {
               </h2>
 
               <span>
-                मंदिर, अजमेर
+                मंडल, अजमेर
               </span>
             </div>
 
@@ -126,7 +156,12 @@ export default function Home() {
           HERO
       ========================= */}
 
-      <section className="hero">
+      <section
+        className="hero"
+        style={{
+          backgroundImage: `url("${heroImages[currentHero]}")`,
+        }}
+      >
 
         <div className="hero-overlay"></div>
 
@@ -176,6 +211,28 @@ export default function Home() {
 
         </div>
 
+        {/* Slider Indicators */}
+
+        <div className="hero-slider-dots">
+
+          {heroImages.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              className={
+                index === currentHero
+                  ? "active"
+                  : ""
+              }
+              onClick={() =>
+                setCurrentHero(index)
+              }
+              aria-label={`Slide ${index + 1}`}
+            />
+          ))}
+
+        </div>
+
       </section>
 
 
@@ -209,7 +266,7 @@ export default function Home() {
             href="/about"
             className="read-more"
           >
-            मंदिर के बारे में जानें →
+            मंडल के बारे में जानें →
           </Link>
 
         </div>
@@ -246,11 +303,11 @@ export default function Home() {
               </div>
 
               <h3>
-                मंदिर परिचय
+                मंडल परिचय
               </h3>
 
               <p>
-                मंदिर और बाबा श्याम से जुड़ी
+                श्री खाटू श्याम मंडल और बाबा श्याम से जुड़ी
                 महत्वपूर्ण जानकारी प्राप्त करें।
               </p>
 
@@ -274,8 +331,8 @@ export default function Home() {
               </h3>
 
               <p>
-                हर वर्ष आयोजित होने वाले
-                धार्मिक कार्यक्रमों की तस्वीरें देखें।
+                धार्मिक कार्यक्रमों और मंडल से जुड़ी
+                सुंदर तस्वीरें देखें।
               </p>
 
               <Link href="/gallery">
@@ -298,8 +355,8 @@ export default function Home() {
               </h3>
 
               <p>
-                मंदिर का स्थान और संपर्क से
-                जुड़ी जानकारी प्राप्त करें।
+                मंडल से जुड़ी संपर्क और स्थान की
+                जानकारी प्राप्त करें।
               </p>
 
               <Link href="/contact">
@@ -355,7 +412,7 @@ export default function Home() {
           <div>
 
             <h2>
-              श्री खाटू श्याम मंदिर
+              श्री खाटू श्याम मंडल
             </h2>
 
             <p>
@@ -389,7 +446,7 @@ export default function Home() {
 
 
         <div className="copyright">
-          © 2026 श्री खाटू श्याम मंदिर, अजमेर
+          © 2026 श्री खाटू श्याम मंडल, अजमेर
         </div>
 
       </footer>
