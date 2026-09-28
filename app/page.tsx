@@ -10,13 +10,12 @@ type HomeContent = {
 };
 
 export default function Home() {
-  const [homeContent, setHomeContent] =
-    useState<HomeContent>({
-      title: "श्री खाटू श्याम",
-      subtitle: "मंडल, अजमेर",
-      description:
-        "श्री खाटू श्याम मंडल, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है। यह वेबसाइट मंडल से जुड़ी जानकारी, धार्मिक आयोजनों और भक्तों की सुंदर स्मृतियों को एक स्थान पर प्रस्तुत करने के लिए बनाई गई है।",
-    });
+  const [homeContent, setHomeContent] = useState<HomeContent>({
+    title: "श्री खाटू श्याम",
+    subtitle: "मंडल, अजमेर",
+    description:
+      "श्री खाटू श्याम मंडल, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है। यह वेबसाइट मंडल से जुड़ी जानकारी, धार्मिक आयोजनों और भक्तों की सुंदर स्मृतियों को एक स्थान पर प्रस्तुत करने के लिए बनाई गई है।",
+  });
 
   // =========================
   // HERO IMAGE SLIDER
@@ -33,12 +32,20 @@ export default function Home() {
 
   const [currentHero, setCurrentHero] = useState(0);
 
+  // Preload all hero images
+  useEffect(() => {
+    heroImages.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+    });
+  }, []);
+
+  // Auto slide every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentHero(
-        (previous) =>
-          (previous + 1) % heroImages.length
-      );
+      setCurrentHero((previous) => {
+        return (previous + 1) % heroImages.length;
+      });
     }, 4000);
 
     return () => clearInterval(interval);
@@ -51,31 +58,22 @@ export default function Home() {
   useEffect(() => {
     async function loadHomeContent() {
       try {
-        const response = await fetch(
-          "/api/content"
-        );
+        const response = await fetch("/api/content");
 
         const data = await response.json();
 
-        if (
-          data.success &&
-          Array.isArray(data.content)
-        ) {
+        if (data.success && Array.isArray(data.content)) {
           const home = data.content.find(
-            (item: {
-              section: string;
-            }) => item.section === "home"
+            (item: { section: string }) =>
+              item.section === "home"
           );
 
           if (home) {
             setHomeContent({
-              title:
-                home.title ||
-                "श्री खाटू श्याम",
+              title: home.title || "श्री खाटू श्याम",
 
               subtitle:
-                home.subtitle ||
-                "मंडल, अजमेर",
+                home.subtitle || "मंडल, अजमेर",
 
               description:
                 home.description ||
@@ -115,6 +113,7 @@ export default function Home() {
             </div>
 
             <div>
+
               <h2>
                 श्री खाटू श्याम
               </h2>
@@ -122,6 +121,7 @@ export default function Home() {
               <span>
                 मंडल, अजमेर
               </span>
+
             </div>
 
           </Link>
@@ -156,14 +156,37 @@ export default function Home() {
           HERO
       ========================= */}
 
-      <section
-        className="hero"
-        style={{
-          backgroundImage: `url("${heroImages[currentHero]}")`,
-        }}
-      >
+      <section className="hero">
+
+        {/* Hero Image Slider */}
+
+        <div className="hero-slider">
+
+          {heroImages.map((image, index) => (
+
+            <div
+              key={image}
+              className={`hero-slide ${
+                index === currentHero
+                  ? "active"
+                  : ""
+              }`}
+              style={{
+                backgroundImage: `url("${image}")`,
+              }}
+            />
+
+          ))}
+
+        </div>
+
+
+        {/* Hero Overlay */}
 
         <div className="hero-overlay"></div>
+
+
+        {/* Hero Content */}
 
         <div className="hero-content">
 
@@ -211,11 +234,13 @@ export default function Home() {
 
         </div>
 
+
         {/* Slider Indicators */}
 
         <div className="hero-slider-dots">
 
           {heroImages.map((_, index) => (
+
             <button
               key={index}
               type="button"
@@ -229,6 +254,7 @@ export default function Home() {
               }
               aria-label={`Slide ${index + 1}`}
             />
+
           ))}
 
         </div>
