@@ -10,10 +10,10 @@ type AboutContent = {
 };
 
 const defaultAbout: AboutContent = {
-  title: "श्री खाटू श्याम मंदिर",
+  title: "श्री लखदातार नवयुवक मंडल",
   subtitle: "अजमेर, राजस्थान",
   description:
-    "श्री खाटू श्याम मंदिर, अजमेर भक्तों के लिए आस्था और श्रद्धा का पावन स्थान है। बाबा श्याम को हारे का सहारा माना जाता है। यह मंदिर भक्तों को आध्यात्मिक शांति, भक्ति और सकारात्मक ऊर्जा का अनुभव प्रदान करता है।",
+    "श्री लखदातार नवयुवक मंडल, अजमेर भक्तों के लिए आस्था और श्रद्धा का पावन स्थान है। बाबा श्याम को हारे का सहारा माना जाता है। यह मंदिर भक्तों को आध्यात्मिक शांति, भक्ति और सकारात्मक ऊर्जा का अनुभव प्रदान करता है।",
 };
 
 export default function AboutPage() {
@@ -58,8 +58,8 @@ export default function AboutPage() {
             <div className="logo-icon">ॐ</div>
 
             <div>
-              <h2>श्री खाटू श्याम</h2>
-              <span>मंदिर, अजमेर</span>
+              <h2>श्री लखदातार नवयुवक </h2>
+              <span>मंडल, अजमेर</span>
             </div>
           </Link>
 
@@ -176,7 +176,7 @@ export default function AboutPage() {
       <footer>
         <div className="container footer-container">
           <div>
-            <h2>श्री खाटू श्याम मंदिर</h2>
+            <h2>श्री लखदातार नवयुवक मंडल</h2>
             <p>अजमेर, राजस्थान</p>
           </div>
 
@@ -189,7 +189,7 @@ export default function AboutPage() {
         </div>
 
         <div className="copyright">
-          © 2026 श्री खाटू श्याम मंदिर, अजमेर
+          © 2026 श्री लखदातार नवयुवक मंडल, अजमेर
         </div>
       </footer>
     </main>

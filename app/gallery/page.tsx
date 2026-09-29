@@ -21,6 +21,9 @@ export default function Gallery() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Selected event
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
   // Lightbox states
   const [selectedImages, setSelectedImages] = useState<ImageData[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -29,6 +32,7 @@ export default function Gallery() {
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
+  // Load events
   useEffect(() => {
     async function loadEvents() {
       try {
@@ -66,19 +70,119 @@ export default function Gallery() {
     .map(Number)
     .sort((a, b) => b - a);
 
+  // -----------------------------------------
+  // Open event
+  // -----------------------------------------
+
+  function openEvent(event: Event) {
+    setSelectedEvent(event);
+
+    window.history.pushState(
+      { eventId: event._id },
+      "",
+      `/gallery?event=${event._id}`
+    );
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  // -----------------------------------------
+  // Close event
+  // -----------------------------------------
+
+  function closeEvent() {
+    setSelectedEvent(null);
+
+    window.history.pushState(
+      {},
+      "",
+      "/gallery"
+    );
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  // -----------------------------------------
+  // Browser Back / Forward
+  // -----------------------------------------
+
+  useEffect(() => {
+    function handlePopState() {
+      const params = new URLSearchParams(
+        window.location.search
+      );
+
+      const eventId = params.get("event");
+
+      if (eventId) {
+        const event = events.find(
+          (item) => item._id === eventId
+        );
+
+        if (event) {
+          setSelectedEvent(event);
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+
+          return;
+        }
+      }
+
+      setSelectedEvent(null);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+
+    window.addEventListener(
+      "popstate",
+      handlePopState
+    );
+
+    return () => {
+      window.removeEventListener(
+        "popstate",
+        handlePopState
+      );
+    };
+  }, [events]);
+
+  // -----------------------------------------
   // Open fullscreen gallery
-  function openGallery(images: ImageData[], index: number) {
+  // -----------------------------------------
+
+  function openGallery(
+    images: ImageData[],
+    index: number
+  ) {
     setSelectedImages(images);
     setSelectedIndex(index);
   }
 
+  // -----------------------------------------
   // Close fullscreen gallery
+  // -----------------------------------------
+
   function closeGallery() {
     setSelectedImages([]);
     setSelectedIndex(0);
   }
 
+  // -----------------------------------------
   // Next image
+  // -----------------------------------------
+
   function showNext() {
     setSelectedIndex((current) => {
       if (current === selectedImages.length - 1) {
@@ -89,7 +193,10 @@ export default function Gallery() {
     });
   }
 
+  // -----------------------------------------
   // Previous image
+  // -----------------------------------------
+
   function showPrevious() {
     setSelectedIndex((current) => {
       if (current === 0) {
@@ -100,7 +207,10 @@ export default function Gallery() {
     });
   }
 
+  // -----------------------------------------
   // Keyboard controls
+  // -----------------------------------------
+
   useEffect(() => {
     function handleKeyboard(event: KeyboardEvent) {
       if (selectedImages.length === 0) {
@@ -120,43 +230,57 @@ export default function Gallery() {
       }
     }
 
-    window.addEventListener("keydown", handleKeyboard);
+    window.addEventListener(
+      "keydown",
+      handleKeyboard
+    );
 
     return () => {
-      window.removeEventListener("keydown", handleKeyboard);
+      window.removeEventListener(
+        "keydown",
+        handleKeyboard
+      );
     };
   }, [selectedImages.length]);
 
+  // -----------------------------------------
   // Mobile swipe
+  // -----------------------------------------
+
   function handleTouchStart(
     event: React.TouchEvent<HTMLDivElement>
   ) {
     setTouchEnd(null);
-    setTouchStart(event.targetTouches[0].clientX);
+    setTouchStart(
+      event.targetTouches[0].clientX
+    );
   }
 
   function handleTouchMove(
     event: React.TouchEvent<HTMLDivElement>
   ) {
-    setTouchEnd(event.targetTouches[0].clientX);
+    setTouchEnd(
+      event.targetTouches[0].clientX
+    );
   }
 
   function handleTouchEnd() {
-    if (touchStart === null || touchEnd === null) {
+    if (
+      touchStart === null ||
+      touchEnd === null
+    ) {
       return;
     }
 
-    const distance = touchStart - touchEnd;
+    const distance =
+      touchStart - touchEnd;
 
-    // Minimum swipe distance
     const minSwipeDistance = 50;
 
-    // Swipe left → next
     if (distance > minSwipeDistance) {
       showNext();
     }
 
-    // Swipe right → previous
     if (distance < -minSwipeDistance) {
       showPrevious();
     }
@@ -177,10 +301,16 @@ export default function Gallery() {
 
           <p>🙏 जय श्री श्याम 🙏</p>
 
-          <h1>कार्यक्रम एवं गैलरी</h1>
+          <h1>
+            {selectedEvent
+              ? selectedEvent.title
+              : "कार्यक्रम एवं गैलरी"}
+          </h1>
 
           <span>
-            बाबा श्याम के पावन आयोजनों की सुंदर स्मृतियां
+            {selectedEvent
+              ? "कार्यक्रम की यादगार तस्वीरें और जानकारी"
+              : "बाबा श्याम के पावन आयोजनों की सुंदर स्मृतियां"}
           </span>
 
         </div>
@@ -188,171 +318,90 @@ export default function Gallery() {
 
 
       {/* =========================
-          GALLERY
+          EVENT DETAIL
       ========================= */}
 
-      <section className="years-section">
+      {selectedEvent ? (
 
-        <div className="container">
+        <section className="event-detail-section">
 
-          <div className="gallery-title">
+          <div className="container">
 
-            <p className="section-label">
-              हमारी स्मृतियां
-            </p>
+            {/* Back Button */}
 
-            <h2>
-              वर्ष अनुसार कार्यक्रम
-            </h2>
-
-            <div className="gold-line"></div>
-
-          </div>
+            <button
+              type="button"
+              className="gallery-back-button"
+              onClick={closeEvent}
+            >
+              ← सभी कार्यक्रम
+            </button>
 
 
-          {/* Loading */}
+            {/* Event Information */}
 
-          {loading && (
-            <div className="gallery-loading">
-              <p>🙏 गैलरी लोड हो रही है...</p>
-            </div>
-          )}
+            <div className="event-detail-header">
 
-
-          {/* No events */}
-
-          {!loading && events.length === 0 && (
-            <div className="gallery-loading">
-              <p>
-                अभी कोई कार्यक्रम उपलब्ध नहीं है।
+              <p className="section-label">
+                {selectedEvent.year}
               </p>
+
+              <h2>
+                {selectedEvent.title}
+              </h2>
+
+              {selectedEvent.date && (
+                <div className="event-detail-date">
+                  📅 {selectedEvent.date}
+                </div>
+              )}
+
+              <div className="gold-line"></div>
+
+              {selectedEvent.description && (
+                <p className="event-detail-description">
+                  {selectedEvent.description}
+                </p>
+              )}
+
             </div>
-          )}
 
 
-          {/* Years */}
+            {/* Photos */}
 
-          {!loading && events.length > 0 && (
-            <div className="years-grid">
+            <div className="event-detail-gallery">
 
-              {years.map((year) => (
+              <h3>
+                📸 कार्यक्रम की तस्वीरें
+              </h3>
 
-                <div
-                  className="year-card"
-                  key={year}
-                >
+              {selectedEvent.images &&
+              selectedEvent.images.length > 0 ? (
 
-                  {/* Year */}
+                <div className="public-images-grid">
 
-                  <div className="year-number">
-                    {year}
-                  </div>
-
-
-                  {/* Event List */}
-
-                  <div className="event-list">
-
-                    {groupedEvents[year].map(
-                      (event) => (
-
-                        <div
-                          className="event-item"
-                          key={event._id}
-                        >
-
-                          <div className="event-item-content">
-
-                            <span className="event-icon">
-                              📸
-                            </span>
-
-                            <div>
-
-                              <strong>
-                                {event.title}
-                              </strong>
-
-                              {event.date && (
-                                <small>
-                                  📅 {event.date}
-                                </small>
-                              )}
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      )
-                    )}
-
-                  </div>
-
-
-                  {/* Event Galleries */}
-
-                  {groupedEvents[year].map(
-                    (event) => (
+                  {selectedEvent.images.map(
+                    (image, index) => (
 
                       <div
-                        className="public-event-gallery"
-                        key={event._id}
+                        className="gallery-photo-card"
+                        key={
+                          image.publicId ||
+                          `${selectedEvent._id}-${index}`
+                        }
+                        onClick={() =>
+                          openGallery(
+                            selectedEvent.images || [],
+                            index
+                          )
+                        }
                       >
 
-                        <h3>
-                          {event.title}
-                        </h3>
-
-
-                        {event.description && (
-                          <p>
-                            {event.description}
-                          </p>
-                        )}
-
-
-                        {/* Photos */}
-
-                        {event.images &&
-                        event.images.length > 0 ? (
-
-                          <div className="public-images-grid">
-
-                            {event.images.map(
-                              (image, index) => (
-
-                                <img
-                                  key={
-                                    image.publicId ||
-                                    index
-                                  }
-                                  src={image.url}
-                                  alt={event.title}
-                                  loading="lazy"
-
-                                  onClick={() =>
-                                    openGallery(
-                                      event.images || [],
-                                      index
-                                    )
-                                  }
-                                />
-
-                              )
-                            )}
-
-                          </div>
-
-                        ) : (
-
-                          <p className="no-event-images">
-                            अभी इस कार्यक्रम की तस्वीरें
-                            उपलब्ध नहीं हैं।
-                          </p>
-
-                        )}
+                        <img
+                          src={image.url}
+                          alt={`${selectedEvent.title} - ${index + 1}`}
+                          loading="lazy"
+                        />
 
                       </div>
 
@@ -361,14 +410,166 @@ export default function Gallery() {
 
                 </div>
 
-              ))}
+              ) : (
+
+                <div className="gallery-loading">
+
+                  <p>
+                    इस कार्यक्रम की तस्वीरें अभी उपलब्ध नहीं हैं।
+                  </p>
+
+                </div>
+
+              )}
 
             </div>
-          )}
 
-        </div>
+          </div>
 
-      </section>
+        </section>
+
+      ) : (
+
+        /* =========================
+            EVENT / ALBUM LIST
+        ========================= */
+
+        <section className="years-section">
+
+          <div className="container">
+
+            <div className="gallery-title">
+
+              <p className="section-label">
+                हमारी स्मृतियां
+              </p>
+
+              <h2>
+                कार्यक्रम एवं आयोजन
+              </h2>
+
+              <div className="gold-line"></div>
+
+              <p className="gallery-intro">
+                किसी भी कार्यक्रम पर क्लिक करके उसकी
+                पूरी जानकारी और तस्वीरें देखें।
+              </p>
+
+            </div>
+
+
+            {/* Loading */}
+
+            {loading && (
+              <div className="gallery-loading">
+
+                <p>
+                  🙏 गैलरी लोड हो रही है...
+                </p>
+
+              </div>
+            )}
+
+
+            {/* No events */}
+
+            {!loading &&
+              events.length === 0 && (
+                <div className="gallery-loading">
+
+                  <p>
+                    अभी कोई कार्यक्रम उपलब्ध नहीं है।
+                  </p>
+
+                </div>
+              )}
+
+
+            {/* Years */}
+
+            {!loading &&
+              events.length > 0 && (
+
+                <div className="years-grid">
+
+                  {years.map((year) => (
+
+                    <div
+                      className="year-card"
+                      key={year}
+                    >
+
+                      {/* Year */}
+
+                      <div className="year-number">
+                        {year}
+                      </div>
+
+
+                      {/* Event Cards */}
+
+                      <div className="event-list">
+
+                        {groupedEvents[year].map(
+                          (event) => (
+
+                            <button
+                              type="button"
+                              className="event-album-card"
+                              key={event._id}
+                              onClick={() =>
+                                openEvent(event)
+                              }
+                            >
+
+                              <div className="event-album-icon">
+                                📸
+                              </div>
+
+                              <div className="event-album-content">
+
+                                <h3>
+                                  {event.title}
+                                </h3>
+
+                                {event.date && (
+                                  <span className="event-album-date">
+                                    📅 {event.date}
+                                  </span>
+                                )}
+
+                                {event.description && (
+                                  <p>
+                                    {event.description}
+                                  </p>
+                                )}
+
+                                <span className="event-album-link">
+                                  तस्वीरें देखें →
+                                </span>
+
+                              </div>
+
+                            </button>
+
+                          )
+                        )}
+
+                      </div>
+
+                    </div>
+
+                  ))}
+
+                </div>
+
+              )}
+
+          </div>
+
+        </section>
+
+      )}
 
 
       {/* =========================
@@ -379,9 +580,7 @@ export default function Gallery() {
 
         <div
           className="gallery-lightbox"
-
           onClick={closeGallery}
-
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
@@ -450,6 +649,7 @@ export default function Gallery() {
             }}
           >
             ›
+
           </button>
 
         </div>
@@ -468,7 +668,7 @@ export default function Gallery() {
           <div>
 
             <h2>
-              श्री खाटू श्याम मंदिर
+              श्री लखदातार नवयुवक मंडल
             </h2>
 
             <p>
@@ -503,7 +703,7 @@ export default function Gallery() {
 
         <div className="copyright">
 
-          © 2026 श्री खाटू श्याम मंदिर, अजमेर
+          © 2026 श्री लखदातार नवयुवक मंडल, अजमेर
 
         </div>
 

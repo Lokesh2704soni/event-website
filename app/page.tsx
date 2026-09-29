@@ -11,10 +11,10 @@ type HomeContent = {
 
 export default function Home() {
   const [homeContent, setHomeContent] = useState<HomeContent>({
-    title: "श्री खाटू श्याम",
-    subtitle: "मंडल, अजमेर",
+    title: "श्री लखदातार",
+    subtitle: "नवयुवक मंडल, अजमेर",
     description:
-      "श्री खाटू श्याम मंडल, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है। यह वेबसाइट मंडल से जुड़ी जानकारी, धार्मिक आयोजनों और भक्तों की सुंदर स्मृतियों को एक स्थान पर प्रस्तुत करने के लिए बनाई गई है।",
+      "श्री लखदातार नवयुवक मंडल, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है। यह वेबसाइट मंडल से जुड़ी जानकारी, धार्मिक आयोजनों और भक्तों की सुंदर स्मृतियों को एक स्थान पर प्रस्तुत करने के लिए बनाई गई है।",
   });
 
   // =========================
@@ -59,7 +59,6 @@ export default function Home() {
     async function loadHomeContent() {
       try {
         const response = await fetch("/api/content");
-
         const data = await response.json();
 
         if (data.success && Array.isArray(data.content)) {
@@ -70,14 +69,15 @@ export default function Home() {
 
           if (home) {
             setHomeContent({
-              title: home.title || "श्री खाटू श्याम",
+              title:
+                home.title || "श्री लखदातार",
 
               subtitle:
-                home.subtitle || "मंडल, अजमेर",
+                home.subtitle || "नवयुवक मंडल, अजमेर",
 
               description:
                 home.description ||
-                "श्री खाटू श्याम मंडल, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है।",
+                "श्री लखदातार नवयुवक मंडल, अजमेर में आपका हार्दिक स्वागत है। बाबा श्याम को हारे का सहारा माना जाता है।",
             });
           }
         }
@@ -96,7 +96,8 @@ export default function Home() {
     <main>
 
       {/* =========================
-          NAVBAR
+          FIXED NAVBAR
+          SEPARATE FROM HERO
       ========================= */}
 
       <header className="navbar">
@@ -115,11 +116,11 @@ export default function Home() {
             <div>
 
               <h2>
-                श्री खाटू श्याम
+                श्री लखदातार
               </h2>
 
               <span>
-                मंडल, अजमेर
+                नवयुवक मंडल, अजमेर
               </span>
 
             </div>
@@ -153,7 +154,9 @@ export default function Home() {
 
 
       {/* =========================
-          HERO
+          HERO SECTION
+          COMPLETELY SEPARATE
+          FROM NAVBAR
       ========================= */}
 
       <section className="hero">
@@ -320,76 +323,102 @@ export default function Home() {
 
           <div className="cards">
 
-            {/* CARD 1 */}
 
-            <div className="card">
+            {/* =========================
+                CARD 1
+            ========================= */}
+
+            <Link
+              href="/about"
+              className="card"
+            >
 
               <div className="icon">
                 🛕
               </div>
 
+
               <h3>
                 मंडल परिचय
               </h3>
 
+
               <p>
-                श्री खाटू श्याम मंडल और बाबा श्याम से जुड़ी
+                श्री लखदातार नवयुवक मंडल और बाबा श्याम से जुड़ी
                 महत्वपूर्ण जानकारी प्राप्त करें।
               </p>
 
-              <Link href="/about">
+
+              <span className="card-link">
                 और जानें →
-              </Link>
+              </span>
 
-            </div>
+            </Link>
 
 
-            {/* CARD 2 */}
+            {/* =========================
+                CARD 2
+            ========================= */}
 
-            <div className="card">
+            <Link
+              href="/gallery"
+              className="card"
+            >
 
               <div className="icon">
                 📸
               </div>
 
+
               <h3>
                 कार्यक्रम एवं गैलरी
               </h3>
+
 
               <p>
                 धार्मिक कार्यक्रमों और मंडल से जुड़ी
                 सुंदर तस्वीरें देखें।
               </p>
 
-              <Link href="/gallery">
+
+              <span className="card-link">
                 गैलरी देखें →
-              </Link>
+              </span>
 
-            </div>
+            </Link>
 
 
-            {/* CARD 3 */}
+            {/* =========================
+                CARD 3
+            ========================= */}
 
-            <div className="card">
+            <Link
+              href="/contact"
+              className="card"
+            >
 
               <div className="icon">
                 📍
               </div>
 
+
               <h3>
                 स्थान एवं संपर्क
               </h3>
+
 
               <p>
                 मंडल से जुड़ी संपर्क और स्थान की
                 जानकारी प्राप्त करें।
               </p>
 
-              <Link href="/contact">
-                संपर्क करें →
-              </Link>
 
-            </div>
+              <span className="card-link">
+                संपर्क करें →
+              </span>
+
+            </Link>
+
 
           </div>
 
@@ -438,7 +467,7 @@ export default function Home() {
           <div>
 
             <h2>
-              श्री खाटू श्याम मंडल
+              श्री लखदातार नवयुवक मंडल
             </h2>
 
             <p>
@@ -472,7 +501,7 @@ export default function Home() {
 
 
         <div className="copyright">
-          © 2026 श्री खाटू श्याम मंडल, अजमेर
+          © 2026 श्री लखदातार नवयुवक मंडल, अजमेर
         </div>
 
       </footer>

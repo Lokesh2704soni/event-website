@@ -15,12 +15,12 @@ type ContactContent = {
 
 const defaultContact: ContactContent = {
   title: "संपर्क करें",
-  subtitle: "श्री खाटू श्याम मंदिर, अजमेर",
+  subtitle: "श्री लखदातार नवयुवक मंडल, अजमेर",
   description:
     "मंदिर से जुड़ी जानकारी, कार्यक्रमों या अन्य किसी विषय के लिए हमसे संपर्क करें।",
   phone: "+919999999999",
   email: "info@example.com",
-  address: "श्री खाटू श्याम मंदिर, अजमेर, राजस्थान",
+  address: "श्री लखदातार नवयुवक मंडल, अजमेर, राजस्थान",
   mapUrl:
     "https://www.google.com/maps/search/?api=1&query=Khatu+Shyam+Mandir+Ajmer",
 };
@@ -235,8 +235,8 @@ export default function ContactPage() {
             <div className="logo-icon">ॐ</div>
 
             <div>
-              <h2>श्री खाटू श्याम</h2>
-              <span>मंदिर, अजमेर</span>
+              <h2>श्री लखदातार नवयुवक </h2>
+              <span>मंडल, अजमेर</span>
             </div>
           </Link>
 
@@ -493,7 +493,7 @@ export default function ContactPage() {
       <footer>
         <div className="container footer-container">
           <div>
-            <h2>श्री खाटू श्याम मंदिर</h2>
+            <h2>श्री लखदातार नवयुवक मंडल</h2>
             <p>अजमेर, राजस्थान</p>
           </div>
 
@@ -506,7 +506,7 @@ export default function ContactPage() {
         </div>
 
         <div className="copyright">
-          © 2026 श्री खाटू श्याम मंदिर, अजमेर
+          © 2026 श्री लखदातार नवयुवक मंडल, अजमेर
         </div>
       </footer>
     </main>

@@ -3769,3 +3769,709 @@ footer {
     width: 22px;
   }
 }
+
+
+
+/* =========================================
+   GALLERY EVENT ALBUM CARDS
+========================================= */
+
+.gallery-intro {
+  max-width: 700px;
+  margin: 18px auto 0;
+  text-align: center;
+  color: #6b5145;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.event-album-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px;
+  margin-bottom: 16px;
+
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 18px;
+
+  background: #fffdf7;
+  color: #3a2118;
+
+  text-align: left;
+  cursor: pointer;
+
+  box-shadow: 0 8px 25px rgba(61, 0, 0, 0.08);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.event-album-card:hover {
+  transform: translateY(-4px);
+
+  border-color: #d4af37;
+
+  box-shadow: 0 14px 35px rgba(61, 0, 0, 0.14);
+}
+
+.event-album-icon {
+  flex-shrink: 0;
+
+  width: 64px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    #7b0000,
+    #a52a2a
+  );
+
+  color: #ffffff;
+
+  font-size: 28px;
+
+  box-shadow:
+    0 6px 15px rgba(123, 0, 0, 0.2);
+}
+
+.event-album-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-album-content h3 {
+  margin: 0 0 7px;
+
+  color: #7b0000;
+
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.event-album-date {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #9a6b00;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.event-album-content p {
+  margin: 0 0 10px;
+
+  color: #6b5145;
+
+  font-size: 0.92rem;
+  line-height: 1.6;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+.event-album-link {
+  display: inline-block;
+
+  color: #7b0000;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   EVENT DETAIL PAGE
+========================================= */
+
+.event-detail-section {
+  padding: 55px 0 80px;
+
+  background: #fffaf0;
+}
+
+.gallery-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 35px;
+
+  padding: 10px 18px;
+
+  border: 1px solid rgba(123, 0, 0, 0.2);
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #7b0000;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.gallery-back-button:hover {
+  background: #7b0000;
+  color: #ffffff;
+
+  transform: translateX(-3px);
+}
+
+.event-detail-header {
+  max-width: 850px;
+
+  margin: 0 auto 45px;
+
+  text-align: center;
+}
+
+.event-detail-header h2 {
+  margin: 10px 0;
+
+  color: #7b0000;
+
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.event-detail-date {
+  margin: 12px 0 18px;
+
+  color: #9a6b00;
+
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.event-detail-description {
+  max-width: 750px;
+
+  margin: 22px auto 0;
+
+  color: #5d463c;
+
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.event-detail-gallery {
+  max-width: 1100px;
+
+  margin: 0 auto;
+}
+
+.event-detail-gallery h3 {
+  margin-bottom: 25px;
+
+  color: #7b0000;
+
+  font-size: 1.5rem;
+
+  text-align: center;
+}
+
+
+/* =========================================
+   EVENT PHOTOS
+========================================= */
+
+.gallery-photo-card {
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 22px rgba(61, 0, 0, 0.1);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.gallery-photo-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 14px 32px rgba(61, 0, 0, 0.16);
+}
+
+.gallery-photo-card img {
+  display: block;
+
+  width: 100%;
+  height: 240px;
+
+  object-fit: cover;
+
+  transition: transform 0.45s ease;
+}
+
+.gallery-photo-card:hover img {
+  transform: scale(1.05);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .event-album-card {
+    gap: 14px;
+
+    padding: 16px;
+
+    border-radius: 15px;
+  }
+
+  .event-album-icon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 13px;
+
+    font-size: 22px;
+  }
+
+  .event-album-content h3 {
+    font-size: 1.05rem;
+  }
+
+  .event-album-content p {
+    font-size: 0.85rem;
+  }
+
+  .event-detail-section {
+    padding: 35px 0 60px;
+  }
+
+  .gallery-back-button {
+    margin-bottom: 25px;
+  }
+
+  .event-detail-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .event-detail-description {
+    font-size: 0.92rem;
+  }
+
+  .gallery-photo-card img {
+    height: 190px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .event-album-card {
+    align-items: flex-start;
+  }
+
+  .event-album-icon {
+    width: 46px;
+    height: 46px;
+
+    font-size: 20px;
+  }
+
+  .event-album-content h3 {
+    font-size: 0.98rem;
+  }
+
+  .event-album-date {
+    font-size: 0.82rem;
+  }
+
+  .event-album-link {
+    font-size: 0.82rem;
+  }
+
+  .gallery-photo-card img {
+    height: 160px;
+  }
+
+}
+
+
+/* =========================================
+   YEAR + EVENT LAYOUT
+========================================= */
+
+.years-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  align-items: start;
+}
+
+.year-card {
+  height: fit-content;
+  align-self: start;
+}
+
+.event-list {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.event-album-card {
+  height: auto;
+  min-height: 100px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 1200px) {
+  .years-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .years-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .years-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.features .card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.features .card-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #7b0000;
+  font-weight: 700;
+}
+
+.features .card:hover .card-link {
+  color: #d4af37;
+}
+
+
+/* =========================
+   FIXED NAVBAR
+   ========================= */
+
+.navbar {
+  position: absolute;
+  padding: 15px 5%;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Hero/navbar overlap fix */
+.hero {
+  margin-top: 0;
+}
+
+/* Fixed navbar ke neeche content spacing */
+main {
+  padding-top: 0;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+  }
+}
+
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  color: #fff8e7;
+}
+
+.hero {
+  position: relative;
+  margin-top: 80px;
+  min-height: 80vh;
+  overflow: hidden;
+}
+
+
+
+/* =========================================
+   FIXED NAVBAR - PREMIUM MAROON
+========================================= */
+
+.navbar {
+  /* position:  !important; */
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 82px;
+
+  background: #3d0000 !important;
+
+  z-index: 9999;
+
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Navbar ke andar content visible rahe */
+.navbar .nav-container {
+  min-height: 82px;
+  display: flex;
+  align-items: center;
+}
+
+/* Logo text */
+.navbar .logo h2,
+.navbar .logo span {
+  color: #ffffff;
+}
+
+/* Navigation links */
+.navbar .nav-links a {
+  color: #ffffff;
+}
+
+.navbar .nav-links a:hover {
+  color: #d4af37;
+}
+
+/* =========================================
+   HERO - NAVBAR SE COMPLETELY SEPARATE
+========================================= */
+
+.hero {
+  position: relative;
+
+  margin-top: 82px !important;
+
+  min-height: calc(80vh - 0px);
+
+  overflow: hidden;
+}
+
+/* Hero slider image */
+.hero-slider {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Hero slides */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0;
+
+  transition: opacity 1.2s ease-in-out;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+/* Overlay */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Hero content */
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Slider dots */
+.hero-slider-dots {
+  z-index: 5;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    min-height: 72px;
+  }
+
+  .navbar .nav-container {
+    min-height: 72px;
+  }
+
+  .hero {
+    margin-top: 72px !important;
+  }
+
+}
+
+
+/* =========================================
+   NAVBAR - NORMAL & COMPACT
+========================================= */
+
+.navbar {
+  position: relative !important;
+  width: 100%;
+  min-height: 64px;
+
+  background: #3d0000 !important;
+
+  z-index: 100;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
+}
+
+.navbar .nav-container {
+  min-height: 64px;
+  padding: 8px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar .logo-icon {
+  width: 38px;
+  height: 38px;
+  font-size: 21px;
+}
+
+.navbar .logo h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.navbar .logo span {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.72rem;
+  color: #f5df9a;
+}
+
+/* Navigation */
+.navbar .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.navbar .nav-links a {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.navbar .nav-links a:hover {
+  color: #d4af37;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+  position: relative;
+  margin-top: 0 !important;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    min-height: 60px;
+  }
+
+  .navbar .nav-container {
+    min-height: 60px;
+    padding: 7px 14px;
+  }
+
+  .navbar .logo-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 19px;
+  }
+
+  .navbar .logo h2 {
+    font-size: 0.92rem;
+  }
+
+  .navbar .logo span {
+    font-size: 0.65rem;
+  }
+
+  .navbar .nav-links {
+    gap: 12px;
+  }
+
+  .navbar .nav-links a {
+    font-size: 0.78rem;
+  }
+}
