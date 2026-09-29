@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "श्री खाटू श्याम मंदिर, अजमेर",
-  description: "श्री खाटू श्याम मंदिर, अजमेर",
+  title: "श्री लखदातार नवयुवक मंडल, अजमेर",
+  description: "श्री लखदातार नवयुवक मंडल, अजमेर",
 };
 
 export default function RootLayout({
